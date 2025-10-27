@@ -1,16 +1,16 @@
 {
     "alumnos": [{
-    "nombre": "Franco",
+    "nombre": "franco",
     "notas": [],
     "asistencias": [] 
 },
 {
-    "nombre": "Constanza",
+    "nombre": "constanza",
     "notas": [],
     "asistencias": []
 },
 {
-    "nombre": "Lucas souza",
+    "nombre": "lucas",
     "notas": [],
     "asistencias": []
 }]
