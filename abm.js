@@ -28,3 +28,42 @@ export function agregarAlumno() {
 
   console.log(`Alumno "${nombre}" agregado correctamente.`);
 }
+
+export function eliminarAlumno() {
+  const datos = leerDatos();
+
+  console.log("Lista actual de alumnos:");
+  for (let i = 0; i < datos.alumnos.length; i++) {
+    console.log((i + 1) + ". " + datos.alumnos[i].nombre);
+  }
+
+  const nombre = prompt("Ingrese el nombre del alumno a eliminar: ");
+
+  let indice = -1;
+  for (let i = 0; i < datos.alumnos.length; i++) {
+    if (datos.alumnos[i].nombre.toLowerCase() === nombre.toLowerCase()) {
+      indice = i;
+      break;
+    }
+  }
+
+  if (indice === -1) {
+    console.log(`No se encontró ningún alumno llamado "${nombre}".`);
+    return;
+  }
+
+  const confirmar = prompt(`¿Seguro que desea eliminar a "${nombre}"? (s/n): `);
+  if (confirmar.toLowerCase() !== "s") {
+    console.log("Operación cancelada.");
+    return;
+  }
+
+  for (let i = indice; i < datos.alumnos.length - 1; i++) {
+    datos.alumnos[i] = datos.alumnos[i + 1];
+  }
+  datos.alumnos.pop(); // quita el último (ahora duplicado)
+
+  guardarDatos(datos);
+
+  console.log(`Alumno "${nombre}" eliminado correctamente.`);
+}
