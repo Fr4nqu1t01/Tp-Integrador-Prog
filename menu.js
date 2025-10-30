@@ -2,7 +2,7 @@ import promptSync from "prompt-sync";
 import { guardarDatos, leerDatos, mostrarAlumnos } from "./Carga_datos.js";
 import { mostrarResumenGeneral } from "./resumen.js";
 import { registrarNotas } from "./notas.js";
-import { agregarAlumno } from "./abm.js";
+import { agregarAlumno, eliminarAlumno } from "./abm.js";
 
 export const prompt = promptSync();
 
@@ -20,6 +20,7 @@ export function menu() {
     3. Registrar asistencias
     4. Mostrar resumen
     5. Agregar alumno
+    6. Eliminar alumno
     0. Salir
     ======================================================`);
 
@@ -43,6 +44,8 @@ export function menu() {
       mostrarResumenGeneral(datos);
     } else if (opcion === 5) {
       agregarAlumno();
+    } else if (opcion === 6){
+      eliminarAlumno();
     }else if (opcion === 0) {
       console.log(`Saliendo...`);
     }
