@@ -1,0 +1,17 @@
+{
+    "alumnos": [{
+    "nombre": "franco",
+    "notas": [],
+    "asistencias": [] 
+},
+{
+    "nombre": "constanza",
+    "notas": [],
+    "asistencias": []
+},
+{
+    "nombre": "lucas",
+    "notas": [],
+    "asistencias": []
+}]
+}
