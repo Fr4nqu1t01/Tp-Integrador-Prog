@@ -55,18 +55,8 @@ export function eliminarAlumno() {
       indiceAlumno < 0 ||
       indiceAlumno >= datos.alumnos.length
     ) {
-      console.log("Numero invalido. Intente de nuevo.");
+      console.log("Número inválido. Intente de nuevo.");
       continue;
-    }
-
-    if (
-      isNaN(indiceAlumno) ||
-      indiceAlumno < 0 ||
-      indiceAlumno >= datos.alumnos.length
-    ) {
-      console.log("Número de alumno inválido.");
-      pausa();
-      return;
     }
 
     const confirmar = prompt(
@@ -78,14 +68,8 @@ export function eliminarAlumno() {
       return;
     }
 
-    const indice = indiceAlumno;
-    for (let i = indice; i < datos.alumnos.length - 1; i++) {
-      datos.alumnos[i] = datos.alumnos[i + 1];
-    }
-    console.log(
-      `Alumno "${datos.alumnos[indice].nombre}" eliminado correctamente.`
-    );
-    datos.alumnos.pop(); // quita el último (ahora duplicado)
+    const eliminado = datos.alumnos.splice(indiceAlumno, 1);
+    console.log(`Alumno "${eliminado[0].nombre}" eliminado correctamente.`);
     guardarDatos(datos);
     pausa();
     break;
