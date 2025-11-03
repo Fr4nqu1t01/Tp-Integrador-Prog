@@ -21,7 +21,7 @@ export function calcularPromedioAsistencia(asistencias) {
 
 export function registrarAsistencias() {
   const datos = leerDatos();
-  
+
   if (datos.alumnos.length === 0) {
     console.log("No hay alumnos registrados.");
     pausa();
@@ -35,7 +35,11 @@ export function registrarAsistencias() {
     const input = prompt("Ingrese el **NUMERO** del alumno: ");
     const indiceAlumno = Number(input) - 1;
 
-    if (isNaN(indiceAlumno) || indiceAlumno < 0 || indiceAlumno >= estudiantes.length) {
+    if (
+      isNaN(indiceAlumno) ||
+      indiceAlumno < 0 ||
+      indiceAlumno >= estudiantes.length
+    ) {
       console.log("Numero invalido. Intente de nuevo.");
       continue;
     }
@@ -54,12 +58,16 @@ export function registrarAsistencias() {
 
         if (asistio == "s") {
           estudiantes[i].asistencias.push("P");
-          console.log(`Asistencia registrada como PRESENTE para ${estudiantes[indiceAlumno].nombre}`);
+          console.log(
+            `Asistencia registrada como PRESENTE para ${estudiantes[indiceAlumno].nombre}`
+          );
           guardarDatos(datos);
         }
         if (asistio == "n") {
           estudiantes[i].asistencias.push("A");
-          console.log(`Asistencia registrada como AUSENTE para ${estudiantes[indiceAlumno].nombre}`);
+          console.log(
+            `Asistencia registrada como AUSENTE para ${estudiantes[indiceAlumno].nombre}`
+          );
           guardarDatos(datos);
         }
         let continuar = prompt(
@@ -80,7 +88,7 @@ export function registrarAsistencias() {
     }
   } while (!encontrado);
 }
- 
+
 export function modificarAsistencia() {
   const datos = leerDatos();
 
@@ -90,61 +98,88 @@ export function modificarAsistencia() {
     return;
   }
 
-  // Mostrar lista de alumnos
   mostrarAlumnos();
 
-  const input = prompt("Ingrese el **NÚMERO** del alumno: ").trim();
-  const indiceAlumno = Number(input) - 1;
+  let indiceAlumno = -1;
 
-  if (isNaN(indiceAlumno) || indiceAlumno < 0 || indiceAlumno >= datos.alumnos.length) {
-    console.log("Número de alumno inválido.");
-    pausa();
-    return;
+  while (
+    isNaN(indiceAlumno) ||
+    indiceAlumno < 0 ||
+    indiceAlumno >= datos.alumnos.length
+  ) {
+    const input = prompt("Ingrese el **NÚMERO** del alumno: ").trim();
+    indiceAlumno = Number(input) - 1;
+
+    if (
+      isNaN(indiceAlumno) ||
+      indiceAlumno < 0 ||
+      indiceAlumno >= datos.alumnos.length
+    ) {
+      console.log("Número de alumno inválido.");
+      continue;
+    }
+
+    const alumno = datos.alumnos[indiceAlumno];
+
+    console.log(`Asistencias de ${alumno.nombre}:`);
+    alumno.asistencias.forEach((asistencia, i) => {
+      console.log(`${i + 1}- ${asistencia}`);
+    });
+
+    if (alumno.asistencias.length === 0) {
+      console.log("Este alumno no tiene asistencias registradas.");
+      pausa();
+      return;
+    }
   }
 
-  const alumno = datos.alumnos[indiceAlumno];
+  let indiceAsistencia = -1;
+  while (
+    isNaN(indiceAsistencia) ||
+    indiceAsistencia < 0 ||
+    indiceAsistencia >= datos.alumnos[indiceAlumno].asistencias.length
+  ) {
+    const posicion = prompt(
+      "Ingrese el **NÚMERO** de la asistencia a modificar: "
+    ).trim();
+    indiceAsistencia = Number(posicion) - 1;
 
-  // Mostrar asistencias actuales
-  console.log(`Asistencias de ${alumno.nombre}:`);
-  alumno.asistencias.forEach((asistencia, i) => {
-    console.log(`${i + 1}- ${asistencia}`);
-  });
-
-  if (alumno.asistencias.length === 0) {
-    console.log("Este alumno no tiene asistencias registradas.");
-    pausa();
-    return;
+    if (
+      isNaN(indiceAsistencia) ||
+      indiceAsistencia < 0 ||
+      indiceAsistencia >= datos.alumnos[indiceAlumno].asistencias.length
+    ) {
+      console.log("Número de asistencia inválido.");
+      continue;
+    }
   }
+  let respuesta = "";
+  do {
+    respuesta = prompt("¿El alumno estuvo presente? (s/n): ").toLowerCase();
+    if (respuesta !== "s" && respuesta !== "n") {
+      console.log(
+        "Respuesta inválida. Use 's' para presente o 'n' para ausente."
+      );
+      continue;
+    }
 
-  const posicion = prompt("Ingrese el **NÚMERO** de la asistencia a modificar: ").trim();
-  const indiceAsistencia = Number(posicion) - 1;
-
-  if (isNaN(indiceAsistencia) || indiceAsistencia < 0 || indiceAsistencia >= alumno.asistencias.length) {
-    console.log("Número de asistencia inválido.");
-    pausa();
-    return;
-  }
-
-  const respuesta = prompt("¿El alumno estuvo presente? (s/n): ").toLowerCase();
-  if (respuesta !== "s" && respuesta !== "n") {
-    console.log("Respuesta inválida. Use 's' para presente o 'n' para ausente.");
-    pausa();
-    return;
-  } else {
+    const alumno = datos.alumnos[indiceAlumno];
     const asistenciaAntigua = alumno.asistencias[indiceAsistencia];
 
     if (respuesta === "s") {
       const nuevaAsistencia = "P";
       alumno.asistencias[indiceAsistencia] = nuevaAsistencia;
-      console.log(`Asistencia modificada de ${asistenciaAntigua} a ${nuevaAsistencia}.`);
-
+      console.log(
+        `Asistencia modificada de ${asistenciaAntigua} a ${nuevaAsistencia}.`
+      );
     } else {
       const nuevaAsistencia = "A";
       alumno.asistencias[indiceAsistencia] = nuevaAsistencia;
-      console.log(`Asistencia modificada de ${asistenciaAntigua} a ${nuevaAsistencia}.`);
-
+      console.log(
+        `Asistencia modificada de ${asistenciaAntigua} a ${nuevaAsistencia}.`
+      );
     }
     guardarDatos(datos);
     pausa();
-  }
+  } while (respuesta !== "s" && respuesta !== "n");
 }

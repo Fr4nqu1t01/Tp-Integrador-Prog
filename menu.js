@@ -41,18 +41,25 @@ export function menu() {
     if (opcion === 1) {
       mostrarAlumnos();
       pausa();
+      console.clear();
     } else if (opcion === 2) {
       registrarNotas();
+      console.clear();
     } else if (opcion === 3) {
       registrarAsistencias();
+      console.clear();
     } else if (opcion === 4) {
       mostrarResumenGeneral();
+      console.clear();
     } else if (opcion === 5) {
       agregarAlumno();
+      console.clear();
     } else if (opcion === 6) {
       eliminarAlumno();
+      console.clear();
     } else if (opcion === 7) {
       menuModificaciones();
+      console.clear();
     } else if (opcion === 0) {
       console.log(`Saliendo...`);
     }

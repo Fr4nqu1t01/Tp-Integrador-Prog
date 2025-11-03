@@ -18,7 +18,7 @@ export function registrarNotas() {
     const input = prompt("Ingrese el **NUMERO** del alumno: ");
     const indiceNombre = Number(input) - 1;
 
-    if (isNaN(indiceNombre) || indiceNombre < 0) {
+    if (isNaN(indiceNombre) || indiceNombre < 0 || indiceNombre >= estudiantes.length) {
       console.log("Numero invalido. Intente de nuevo.");
       continue;
     }
@@ -84,7 +84,6 @@ export function modificarNota() {
     return;
   }
 
-  // Mostrar lista de alumnos
   mostrarAlumnos();
   let indiceAlumno = -1;
   while (
@@ -92,6 +91,7 @@ export function modificarNota() {
     indiceAlumno < 0 ||
     indiceAlumno >= datos.alumnos.length
   ) {
+    // este while se repite hasta que se ingrese un indice valido
     const input = prompt("Ingrese el **NÚMERO** del alumno: ").trim();
     indiceAlumno = Number(input) - 1;
 
@@ -101,7 +101,6 @@ export function modificarNota() {
       indiceAlumno >= datos.alumnos.length
     ) {
       console.log("Número de alumno inválido.");
-      pausa();
       continue;
     }
 
@@ -118,33 +117,41 @@ export function modificarNota() {
       pausa();
       return;
     }
-
+  }
+  let indiceNota = -1;
+  while (
+    isNaN(indiceNota) ||
+    indiceNota < 0 ||
+    indiceNota >= datos.alumnos[indiceAlumno].notas[indiceNota].length
+  ) {
+    
     const posicion = prompt(
       "Ingrese el **NÚMERO** de la nota a modificar: "
     ).trim();
-    const indiceNota = Number(posicion) - 1;
+    indiceNota = Number(posicion) - 1;
 
     if (
       isNaN(indiceNota) ||
       indiceNota < 0 ||
-      indiceNota >= alumno.notas.length
+      indiceNota >= datos.alumnos[indiceAlumno].notas[indiceNota].length
     ) {
-      console.log("Número de nota inválido.");
-      pausa();
-      return;
+      console.log("Numero de nota inválido, intentelo denuevo.");
+      continue;
     }
+  }
+  let nuevaNota = -1;
+  while (isNaN(nuevaNota) || nuevaNota < 0 || nuevaNota > 10) {
 
     const inputNota = prompt("Ingrese la nueva nota (0-10): ").trim();
-    const nuevaNota = Number(inputNota);
+    nuevaNota = Number(inputNota);
 
     if (isNaN(nuevaNota) || nuevaNota < 0 || nuevaNota > 10) {
       console.log("Nota inválida. Debe ser un número entre 0 y 10.");
-      pausa();
-      return;
+      continue;
     }
 
-    const notaAntigua = alumno.notas[indiceNota];
-    alumno.notas[indiceNota] = nuevaNota;
+    const notaAntigua = datos.alumnos[indiceAlumno].notas[indiceNota];
+    datos.alumnos[indiceAlumno].notas[indiceNota] = nuevaNota;
     guardarDatos(datos);
 
     console.log(`Nota modificada: ${notaAntigua} A ${nuevaNota}`);
